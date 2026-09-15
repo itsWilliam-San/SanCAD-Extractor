@@ -2,6 +2,6 @@
 {
     public interface IExtractor
     {
-        void Entry(Entry.TextEntity textEntity); 
+        void Entry(TextEntity[] textEntity); 
     }
 }

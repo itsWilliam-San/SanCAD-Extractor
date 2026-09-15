@@ -25,7 +25,7 @@ namespace SewerSystem
                     .Select(dbtext => new TextEntity
                     {
                         Content = dbtext.TextString, 
-                        Position = new Position
+                        Coordinates = new TextEntity.Position
                         {
                             X = dbtext.Position.X, 
                             Y = dbtext.Position.Y
@@ -53,16 +53,24 @@ namespace SewerSystem
             
         }
 
+    }
+            
+    public class TextEntity
+    {
         public struct Position
         {
-           public double X; 
-           public double Y;
+            public double X {get;set;} 
+            public double Y {get;set;}
         }
+
+        private string _content;
         
-        public struct TextEntity
+        public string Content
         {
-            public string Content;
-            public Position Position;
+            get => _content;
+            set => _content = value?.Trim() ?? string.Empty;
         }
+
+        public Position Coordinates { get; set; }
     }
 }
