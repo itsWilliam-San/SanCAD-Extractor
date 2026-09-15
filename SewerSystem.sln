@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SewerSystem", "SewerSystem\SewerSystem.csproj", "{15102FEC-3338-49BD-99C7-816F2BFCCD10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extractor", "Extractor\Extractor.csproj", "{A7870681-BA7F-4C4F-BD10-EE598338739A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exporter", "Exporter\Exporter.csproj", "{FD0F95C6-9BD5-4268-8B02-74E749579096}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15102FEC-3338-49BD-99C7-816F2BFCCD10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15102FEC-3338-49BD-99C7-816F2BFCCD10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15102FEC-3338-49BD-99C7-816F2BFCCD10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15102FEC-3338-49BD-99C7-816F2BFCCD10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7870681-BA7F-4C4F-BD10-EE598338739A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7870681-BA7F-4C4F-BD10-EE598338739A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7870681-BA7F-4C4F-BD10-EE598338739A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7870681-BA7F-4C4F-BD10-EE598338739A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD0F95C6-9BD5-4268-8B02-74E749579096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0F95C6-9BD5-4268-8B02-74E749579096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0F95C6-9BD5-4268-8B02-74E749579096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0F95C6-9BD5-4268-8B02-74E749579096}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
