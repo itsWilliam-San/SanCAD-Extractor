@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using SewerSystem.Contracts;
 using ZwSoft.ZwCAD.ApplicationServices.Core;
 using ZwSoft.ZwCAD.DatabaseServices;
 using ZwSoft.ZwCAD.EditorInput;
@@ -53,24 +52,5 @@ namespace SewerSystem
             
         }
 
-    }
-            
-    public class TextEntity
-    {
-        public struct Position
-        {
-            public double X {get;set;} 
-            public double Y {get;set;}
-        }
-
-        private string _content;
-        
-        public string Content
-        {
-            get => _content;
-            set => _content = value?.Trim() ?? string.Empty;
-        }
-
-        public Position Coordinates { get; set; }
     }
 }

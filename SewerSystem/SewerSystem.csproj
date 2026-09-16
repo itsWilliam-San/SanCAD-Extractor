@@ -63,13 +63,17 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Core\Entry.cs" />
-        <Compile Include="Core\IExporter.cs" />
-        <Compile Include="Core\IExtractor.cs" />
+        <Compile Include="Entry.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\SewerSystem.Contracts\SewerSystem.Contracts.csproj">
+        <Project>{c8d1a923-5c46-4183-8a9b-53023dd5b277}</Project>
+        <Name>SewerSystem.Contracts</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
