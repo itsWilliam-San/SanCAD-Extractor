@@ -21,7 +21,7 @@
     
     public interface IExtractor
     {
-        void Entry(TextEntity[] textEntity); 
+        Manhole Entry(TextEntity[] textEntity); 
         
         
     }
