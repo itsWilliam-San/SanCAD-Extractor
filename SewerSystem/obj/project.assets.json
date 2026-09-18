@@ -1,0 +1,74 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.8.1": {
+      "SewerSystem.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/SewerSystem.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SewerSystem.Contracts.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SewerSystem.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../SewerSystem.Contracts/SewerSystem.Contracts.csproj",
+      "msbuildProject": "../SewerSystem.Contracts/SewerSystem.Contracts.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.8.1": [
+      "SewerSystem.Contracts >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\William\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem\\SewerSystem.csproj",
+      "projectName": "SewerSystem",
+      "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem\\SewerSystem.csproj",
+      "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "UsingMicrosoftNETSdk": false,
+      "configFilePaths": [
+        "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net481"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net481": {
+          "framework": "net481",
+          "projectReferences": {
+            "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
+              "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj"
+            }
+          }
+        }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net481": {
+        "framework": "net481"
+      }
+    }
+  }
+}
