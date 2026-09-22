@@ -1,4 +1,6 @@
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using SewerSystem.Contracts;
 using ZwSoft.ZwCAD.ApplicationServices.Core;
 using ZwSoft.ZwCAD.DatabaseServices;
@@ -50,7 +52,15 @@ namespace SewerSystem
             
             var texts = GetTextEntities(db, objectResult.Value);
             
+            SerializeData(texts);
         }
-
+        
+        // This is used for testing later
+        private void SerializeData<T>(T data)
+        {
+            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented); 
+            
+            File.WriteAllText("data.json", jsonString);
+        }
     }
 }

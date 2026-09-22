@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SewerSystem", "SewerSystem\SewerSystem.csproj", "{15102FEC-3338-49BD-99C7-816F2BFCCD10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extractor", "Extractor\Extractor.csproj", "{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SancadExtractor", "SancadExtractor\SancadExtractor.csproj", "{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extractor.Tests", "Extractor.Tests\Extractor.Tests.csproj", "{72A85CCA-196E-483C-B93A-E020F04D1080}"
 EndProject
@@ -26,10 +26,10 @@ Global
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72A85CCA-196E-483C-B93A-E020F04D1080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72A85CCA-196E-483C-B93A-E020F04D1080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A85CCA-196E-483C-B93A-E020F04D1080}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A85CCA-196E-483C-B93A-E020F04D1080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72A85CCA-196E-483C-B93A-E020F04D1080}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{72A85CCA-196E-483C-B93A-E020F04D1080}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SewerSystem.Contracts;
 
@@ -28,8 +29,20 @@ public class Intermediate : Station
 
 public class Manhole : Station
 {
-    public List<Manhole> UpstreamManholes { get; }
-    public DownstreamConnection? DownstreamConnection { get; }
+    public List<Manhole> UpstreamManholes { get; set; }
+    public DownstreamConnection? DownstreamConnection { get; set; }
+
+    public Manhole GetBranchRoot()
+    {
+        var current = this;
+
+        while (current.UpstreamManholes.Count == 1)
+        {
+            current = current.UpstreamManholes[0];
+        }
+
+        return current;
+    }
     
     public Manhole(string id, decimal terrainLevel, decimal invertLevel, decimal depth) 
         : base(id,  terrainLevel, invertLevel, depth)
@@ -64,3 +77,20 @@ public record Segment(
     decimal Slope,
     Pipe Pipe
 );
+
+[AttributeUsage(AttributeTargets.Class)]
+public class PluginInfoAttribute : Attribute
+{
+    public string Name { get; }
+    public string Description { get; }
+    public string Version { get; }
+    public string Author { get; }
+    
+    public PluginInfoAttribute(string name, string description, string version, string author)
+    {
+        Name = name;
+        Description = description;
+        Version = version;
+        Author = author;
+    }
+}

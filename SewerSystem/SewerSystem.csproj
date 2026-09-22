@@ -33,40 +33,57 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+          <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+        </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
         <Reference Include="System.Xml"/>
         <Reference Include="ZcCui, Version=25.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZcCui.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZcWindows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZcWindows.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZdWindows, Version=4.0.0.6, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZdWindows.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZwDatabaseMgd, Version=26.0.26.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwDatabaseMgd.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZwDatabaseMgdBrep, Version=26.0.26.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwDatabaseMgdBrep.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZwManaged, Version=26.0.26.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwManaged.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZwSoft.ZwCAD.Interop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwSoft.ZwCAD.Interop.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="ZwSoft.ZwCAD.Interop.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwSoft.ZwCAD.Interop.Common.dll</HintPath>
+          <Private>False</Private>
         </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Entry.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="PythonBridge.cs" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\SancadExtractor\SancadExtractor.csproj">
+        <Project>{f84ac13c-eae5-4034-93c6-c8c09fc0e44d}</Project>
+        <Name>SancadExtractor</Name>
+        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      </ProjectReference>
       <ProjectReference Include="..\SewerSystem.Contracts\SewerSystem.Contracts.csproj">
         <Project>{c8d1a923-5c46-4183-8a9b-53023dd5b277}</Project>
         <Name>SewerSystem.Contracts</Name>
@@ -75,13 +92,26 @@
     <ItemGroup>
       <None Include="packages.config" />
     </ItemGroup>
+    <ItemGroup>
+      <Content Include="exporter.py" />
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
+    -->
+    
+    <!--
     <Target Name="BeforeBuild">
     </Target>
-    <Target Name="AfterBuild">
-    </Target>
     -->
+    <Target Name="AfterBuild">
+        <ItemGroup>
+            <Extractor Include="$(SolutionDir)SancadExtractor\bin\$(Configuration)\**\*.*"/>
+            <Exporter Include="$(SolutionDir)Exporter\bin\$(Configuration)\**\*.*"/>
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(Extraction)" DestinationFolder="$(TargetDir)\plugins\extraction\SancadExtractor\%(RecursiveDir)"/>
+        <Copy SourceFiles="@(Exporter)" DestinationFolder="$(TargetDir)\plugins\exporter\OficialExporter\%(RecursiveDir)"/>
+    </Target>
 
 </Project>

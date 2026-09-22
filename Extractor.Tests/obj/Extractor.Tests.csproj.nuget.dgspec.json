@@ -13,13 +13,19 @@
         "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor.Tests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -27,8 +33,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor\\Extractor.csproj": {
-                "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor\\Extractor.csproj"
+              "C:\\Users\\William\\RiderProjects\\SewerSystem\\SancadExtractor\\SancadExtractor.csproj": {
+                "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SancadExtractor\\SancadExtractor.csproj"
               },
               "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
                 "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj"
@@ -364,22 +370,28 @@
         }
       }
     },
-    "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor\\Extractor.csproj": {
+    "C:\\Users\\William\\RiderProjects\\SewerSystem\\SancadExtractor\\SancadExtractor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor\\Extractor.csproj",
-        "projectName": "Extractor",
-        "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor\\Extractor.csproj",
+        "projectUniqueName": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SancadExtractor\\SancadExtractor.csproj",
+        "projectName": "SancadExtractor",
+        "projectPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SancadExtractor\\SancadExtractor.csproj",
         "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\Extractor\\obj\\",
+        "outputPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SancadExtractor\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -394,6 +406,7 @@
           }
         },
         "warningProperties": {
+          "allWarningsAsErrors": true,
           "warnAsError": [
             "NU1605"
           ]
@@ -451,13 +464,19 @@
         "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\William\\RiderProjects\\SewerSystem\\SewerSystem.Contracts\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

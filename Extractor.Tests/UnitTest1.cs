@@ -1,22 +1,19 @@
-﻿using SewerSystem.Contracts;
+﻿using Newtonsoft.Json;
+using SewerSystem.Contracts;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Extractor.Tests;
 
 public class UnitTest1
 {
-    private static IEnumerable<TextEntity[]> ProfileData()
+    [Fact]
+    public void MissingDataTest()
     {
-        yield return new TextEntity[]
-        {
-            new List<String> {"Linha1", "Linha2"},
-        }
-    }
-    
-    
-    [Theory]
-    [MemberData(nameof(ProfileData))]
-    
-    public void Test1(TextEntity[] rawData)
-    {
+        string rawMissingData = File.ReadAllText("fixtures/missingData.json");
+        
+        var missingData = JsonSerializer.Deserialize<TextEntity[]>(rawMissingData);
+
+        var extractor = new Extractor.Main();
+        var manhole = extractor.Entry(missingData);
     }
 }

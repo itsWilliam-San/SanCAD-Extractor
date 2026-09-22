@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Extractor\Extractor.csproj" />
+      <ProjectReference Include="..\SancadExtractor\SancadExtractor.csproj" />
       <ProjectReference Include="..\SewerSystem.Contracts\SewerSystem.Contracts.csproj" />
     </ItemGroup>
 
