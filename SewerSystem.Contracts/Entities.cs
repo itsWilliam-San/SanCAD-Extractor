@@ -29,7 +29,7 @@ public class Intermediate : Station
 
 public class Manhole : Station
 {
-    public List<Manhole> UpstreamManholes { get; set; }
+    public List<Manhole> UpstreamManholes { get; set; } = new List<Manhole>();
     public DownstreamConnection? DownstreamConnection { get; set; }
 
     public Manhole GetBranchRoot()

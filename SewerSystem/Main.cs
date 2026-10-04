@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -7,12 +8,28 @@ using ZwSoft.ZwCAD.DatabaseServices;
 using ZwSoft.ZwCAD.EditorInput;
 using ZwSoft.ZwCAD.Runtime;
 
-[assembly: CommandClass(typeof(SewerSystem.Entry))]
+[assembly: CommandClass(typeof(SewerSystem.Main))]
+[assembly: ExtensionApplication(typeof(SewerSystem.SewerSystemApp))]
 
 namespace SewerSystem
 {
-    public class Entry
+    
+    public class SewerSystemApp : IExtensionApplication
     {
+        public void Initialize()
+        {
+            // Initialization code here
+        }
+        public void Terminate()
+        {
+            // Cleanup code here
+        }
+    }
+
+    public class Main
+    {
+        private readonly string PluginsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins");
+        
         private readonly SelectionFilter
             _filter = new SelectionFilter(new[] { new TypedValue((int)DxfCode.Start, "TEXT") });
 
@@ -50,11 +67,13 @@ namespace SewerSystem
                 return;
             }
             
-            var texts = GetTextEntities(db, objectResult.Value);
-            
-            SerializeData(texts);
+            // var texts = GetTextEntities(db, objectResult.Value);
+
+            var plugins = ExtractorLoader.LoadPlugins(PluginsPath);
+
+            var uiManager = new UiManager();
         }
-        
+
         // This is used for testing later
         private void SerializeData<T>(T data)
         {

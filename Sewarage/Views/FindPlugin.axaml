@@ -1,0 +1,114 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:Sewarage.Models"
+             xmlns:controls="clr-namespace:Sewarage.Views.Controls"
+             xmlns:vm="clr-namespace:Sewarage.ViewModels"
+             x:DataType="vm:FindPluginViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Sewarage.Views.FindPlugin">
+    <Design.DataContext>
+        <vm:FindPluginViewModel />
+    </Design.DataContext>
+    
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="model:Plugin">
+            <Border CornerRadius="5" Background="{DynamicResource AccentButtonForeground}" Padding="10" BorderBrush="Black" BorderThickness="1">
+                <Grid Margin="0,0,0,0" RowDefinitions="*,*,*">
+                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                            
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <StackPanel Grid.Column="0"
+                                        Orientation="Horizontal" 
+                                        Grid.Row="0" 
+                                        Margin="0,0,0,0">
+                                <TextBlock 
+                                    Text="{Binding Name}" 
+                                    FontSize="16" 
+                                    FontWeight="Bold" 
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,10, 3"
+                                />
+                                <TextBlock Text="{Binding Version}" Foreground="{StaticResource SystemAccentColor}" FontSize="11" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Developer:" FontSize="12"/>
+                                <TextBlock Text="{Binding Author}" FontSize="12"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <WrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" MaxHeight="40" VerticalAlignment="Center" ClipToBounds="True">
+                            <Button FontSize="10" FontWeight="SemiBold" Content="{Binding Author}"/>
+                            <Button FontSize="10" FontWeight="SemiBold" Content="{Binding Author}"/>
+                            <Button FontSize="10" FontWeight="SemiBold" Content="{Binding Author}"/>
+                        </WrapPanel>
+                    </Grid>
+                    
+                    <TextBlock TextWrapping="Wrap" Text="{Binding Description}" Grid.Row="2" FontSize="13"/>
+                </Grid>
+            </Border>     
+        </DataTemplate>
+    </UserControl.DataTemplates>
+    
+    <Grid RowDefinitions="1*,5*">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1">
+            <Grid Margin="20" ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <controls:SearchBox Width="250" HorizontalAlignment="Left" VerticalAlignment="Center" Placeholder="Search detected plugins..." Margin="0,0,10,0"/>
+                    <ComboBox Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Background="{StaticResource AccentButtonBackground}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <ThemeVariantScope RequestedThemeVariant="Dark">
+                                <Svg 
+                                    Path="{DynamicResource ArrowCounterClockWiseIcon }"
+                                    Width="24" 
+                                    Height="24"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,0,5,0"
+                                />
+                            </ThemeVariantScope>
+                            <TextBlock 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Text="Scan Folder" Foreground="{StaticResource AccentButtonForeground}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Background="{StaticResource AccentButtonBackground}" Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <ThemeVariantScope RequestedThemeVariant="Dark">
+                                <Svg 
+                                    Path="{DynamicResource SettingsIcon}"
+                                    Width="24" 
+                                    Height="24"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,0,5,0"
+                                />
+                            </ThemeVariantScope>
+                            <TextBlock 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Text="CAD Paths" Foreground="{StaticResource AccentButtonForeground}"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <Grid ShowGridLines="True" Grid.Row="1" ColumnDefinitions="*,3*">
+            <ListBox Grid.Column="1" ItemsSource="{Binding Plugins}"/>
+        </Grid>
+    </Grid>
+</UserControl>

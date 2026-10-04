@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SewerSystem", "SewerSystem\SewerSystem.csproj", "{15102FEC-3338-49BD-99C7-816F2BFCCD10}"
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12217.175
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "SewerSystem\Connector.csproj", "{15102FEC-3338-49BD-99C7-816F2BFCCD10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SancadExtractor", "SancadExtractor\SancadExtractor.csproj", "{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}"
 EndProject
@@ -11,6 +14,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2B233CF7-DD36-466F-99E5-36EFF2FF4536}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SewerSystem.Contracts", "SewerSystem.Contracts\SewerSystem.Contracts.csproj", "{C8D1A923-5C46-4183-8A9B-53023DD5B277}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{1D003272-CF57-4DBA-85DB-C4CD602798F7}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Documents\Obsidian Vault\SewerSystem\README.md = ..\..\Documents\Obsidian Vault\SewerSystem\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sewarage", "Sewarage\Sewarage.csproj", "{AECD97E7-720F-491E-9672-E29EB93C0C11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,19 +36,30 @@ Global
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72A85CCA-196E-483C-B93A-E020F04D1080}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72A85CCA-196E-483C-B93A-E020F04D1080}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72A85CCA-196E-483C-B93A-E020F04D1080}.Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{72A85CCA-196E-483C-B93A-E020F04D1080}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{72A85CCA-196E-483C-B93A-E020F04D1080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A85CCA-196E-483C-B93A-E020F04D1080}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{15102FEC-3338-49BD-99C7-816F2BFCCD10} = {2B233CF7-DD36-466F-99E5-36EFF2FF4536}
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D} = {A19BF140-064D-4868-AA89-DC3C81D50468}
 		{72A85CCA-196E-483C-B93A-E020F04D1080} = {A19BF140-064D-4868-AA89-DC3C81D50468}
-		{15102FEC-3338-49BD-99C7-816F2BFCCD10} = {2B233CF7-DD36-466F-99E5-36EFF2FF4536}
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277} = {2B233CF7-DD36-466F-99E5-36EFF2FF4536}
+		{AECD97E7-720F-491E-9672-E29EB93C0C11} = {2B233CF7-DD36-466F-99E5-36EFF2FF4536}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A8FC91D-A123-4A72-8F24-CE4DEAA2B4D0}
 	EndGlobalSection
 EndGlobal

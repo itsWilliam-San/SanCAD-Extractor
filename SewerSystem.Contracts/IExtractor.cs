@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace SewerSystem.Contracts
 {
@@ -27,42 +29,5 @@ namespace SewerSystem.Contracts
     public interface IExtractor
     {
         public Manhole Entry(TextEntity[] textEntity); 
-    }
-
-    public class ExtractorLoader
-    {
-        public List<IExtractor> LoadPlugins(string path)
-        {
-            var pluginsLoaded = new List<IExtractor>();
-
-            if (!Directory.Exists(path))
-                return  pluginsLoaded;
-            
-            string[] libs = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
-
-            foreach (var type in libs)
-            {
-                try
-                {
-                    var assembly = Assembly.LoadFrom(type);
-
-                    foreach (var t in assembly.GetTypes())
-                    {
-                        if (typeof(IExtractor).IsAssignableFrom(t) && t is { IsInterface: false, IsAbstract: false })
-                        {
-                            var extractor = (IExtractor)Activator.CreateInstance(t);
-                            pluginsLoaded.Add(extractor);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Failed to load the DLL {type}: {e.Message}");
-                    throw;
-                }
-            }
-            
-            return pluginsLoaded;
-        }
     }
 }
