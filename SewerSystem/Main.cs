@@ -13,23 +13,62 @@ using ZwSoft.ZwCAD.Runtime;
 
 namespace SewerSystem
 {
-    
+
     public class SewerSystemApp : IExtensionApplication
     {
+        private bool _running = true;
+
+        private void OpenSocket()
+        {
+            Task.Run(async () =>
+            {
+                while (_running)
+                {
+                    try
+                    {
+                        using var client = new NamedPipeClientStream(".", "ipcChannel", PipeDirection.InOUt);
+                        await client.ConnectAsync();
+
+                        using var reader = new StreamReader(client);
+                        using var writer = new StreamWriter(client) { AutoFlush = true };
+
+                        while (client.IsConnected && _running)
+                        {
+                            string mensage = await reader.ReadLineAsync();
+
+                            // Do Something
+
+                            await writer.WriteLineAsync("OK");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Try again later
+                        await Task.Delay(2000);
+                    }
+                }
+            });
+        }
+
+        private void CloseSocket()
+        {
+            _running = false;
+        }
+
         public void Initialize()
         {
-            // Initialization code here
+            OpenSocket();
         }
         public void Terminate()
         {
-            // Cleanup code here
+            CloseSocket();
         }
     }
 
     public class Main
     {
         private readonly string PluginsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins");
-        
+
         private readonly SelectionFilter
             _filter = new SelectionFilter(new[] { new TypedValue((int)DxfCode.Start, "TEXT") });
 
@@ -42,17 +81,17 @@ namespace SewerSystem
                     .OfType<DBText>()
                     .Select(dbtext => new TextEntity
                     {
-                        Content = dbtext.TextString, 
+                        Content = dbtext.TextString,
                         Coordinates = new TextEntity.Position
                         {
-                            X = dbtext.Position.X, 
+                            X = dbtext.Position.X,
                             Y = dbtext.Position.Y
                         }
                     })
                     .ToArray();
             }
         }
-        
+
         [CommandMethod("SewerSystem")]
         public void SewerSystem()
         {
@@ -66,7 +105,7 @@ namespace SewerSystem
             {
                 return;
             }
-            
+
             // var texts = GetTextEntities(db, objectResult.Value);
 
             var plugins = ExtractorLoader.LoadPlugins(PluginsPath);
@@ -77,8 +116,8 @@ namespace SewerSystem
         // This is used for testing later
         private void SerializeData<T>(T data)
         {
-            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented); 
-            
+            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
+
             File.WriteAllText("data.json", jsonString);
         }
     }

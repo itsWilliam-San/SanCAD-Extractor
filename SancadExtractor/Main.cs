@@ -16,20 +16,20 @@ namespace Extractor
     {
         internal static readonly Regex Basin = new Regex(@"^BÁCIA: .*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static readonly Regex Collection = new Regex(@"^COLETOR: \d+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        
+
         #region StationNames
         internal static readonly Regex Manhole = new Regex(@"^SB\d+-\d$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static readonly Regex Intermediate = new Regex(@"^\d+-\d+E\d+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static readonly Regex StepDrop = new Regex(@"^TQ\s\d(?:[.,]\d+)?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static readonly Regex DropPipe = new Regex(@"^DG\s\d(?:[.,]\d+)?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
-        
+
         #region SegmentsSyntaxe
         internal static readonly Regex ColTre = new Regex(@"^(\d+)-(\d+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static readonly Regex CompDiam = ColTre;
         #endregion
     }
-    
+
     [PluginInfo("Unofficial SANCAD extractor", "Use this extractor if you have a table generated from SANCAD software", "0.1.0", "William S. Santos")]
     public class Main : IExtractor
     {
@@ -61,7 +61,7 @@ namespace Extractor
             { Headers.Intermediates, "ESTACAS" },
         };
 
-    private static readonly Dictionary<Headers, string> SegmentHeaders = new()
+        private static readonly Dictionary<Headers, string> SegmentHeaders = new()
         {
             { Headers.CollectionSegment, "COL-TRE" },
             { Headers.PipeLengthDiameter, "COMP-DIAM" },
@@ -71,7 +71,7 @@ namespace Extractor
             { Headers.Material, "MATERIAL" },
         };
 
-        private static readonly HashSet<string> Ignore = new(){"OBS", "CTJ", "CCJ", "PRFJ"};
+        private static readonly HashSet<string> Ignore = new() { "OBS", "CTJ", "CCJ", "PRFJ" };
 
         /// <summary>
         /// This functions splits a HORIZONTAL table (Header -> Data -> Header -> Data -> ...)
@@ -110,11 +110,11 @@ namespace Extractor
                     stationData.Add(item);
                 }
             }
-            
+
             return (sectionData, stationData);
         }
 
-        
+
         /// <summary>
         /// This function takes the raw data from SewerSystem and separates them
         /// into SectionData and StationData.
@@ -137,13 +137,13 @@ namespace Extractor
 
             var (sectionData, stationData) = SplitData(data);
 
-            var sectionDataVertical = sectionData 
+            var sectionDataVertical = sectionData
                 .OrderBy(x => x.Coordinates.X)
                 .ThenByDescending(x => x.Coordinates.Y)
                 .Skip(SegmentHeaders.Count)
                 .Select(x => x.Content)
                 .Batch(SegmentHeaders.Count);
-            
+
             if (sectionDataVertical.Any(batch => batch.Length != SegmentHeaders.Count))
             {
                 throw new InvalidOperationException($"Not all sections have {SegmentHeaders.Count} elements.");
@@ -189,27 +189,27 @@ namespace Extractor
         private static List<string> ValidateStationData(string[][] stationData)
         {
             List<string> errors = new List<string>();
-            
+
             string errorMessage;
 
             stationData.ForEach(x =>
             {
-                var curStationLen = x.Length;   
+                var curStationLen = x.Length;
                 if (curStationLen != StationHeaders.Count)
                 {
                     errorMessage = $"The station data should have {StationHeaders.Count}, but got  {x.Length}.\nDetected data:";
 
                     x.Aggregate(errorMessage, (current, data) => current + $" {data}");
-                    
+
                     errorMessage += $"Please, fix your station data according to the following headers:";
 
                     StationHeaders.Aggregate(errorMessage, (current, header) => current + $" {header.Value}");
-                    
+
                     errorMessage += $"We can't check for other errors related to this Station since its incomplete. Please, review it.";
                     errors.Add(errorMessage);
                     return;
                 }
-                
+
                 var (id, terrainLevel, invertLevel, depth) = (x[0], x[1], x[2], x[3]);
 
                 if (!(Regexes.Manhole.IsMatch(id) || Regexes.Intermediate.IsMatch(id) || Regexes.DropPipe.IsMatch(id) ||
@@ -223,14 +223,14 @@ namespace Extractor
 
                 if (!TryConvertToDecimal(terrainLevel, out var convertedTerrain))
                 {
-                    errorMessage =$"Invalid terrain level: {terrainLevel}";
+                    errorMessage = $"Invalid terrain level: {terrainLevel}";
                     errors.Add(errorMessage);
                     failed = true;
                 }
 
                 if (!TryConvertToDecimal(invertLevel, out var convertedInvert))
                 {
-                    errorMessage =$"Invalid invert level: {invertLevel}";
+                    errorMessage = $"Invalid invert level: {invertLevel}";
                     errors.Add(errorMessage);
                     failed = true;
                 }
@@ -245,7 +245,7 @@ namespace Extractor
                 if (!failed)
                 {
                     var expectedDepth = convertedTerrain - convertedInvert;
-                
+
                     if (expectedDepth != convertedDepth)
                     {
                         errorMessage = $"The depth is said to be {depth} but should be {expectedDepth}";
@@ -261,7 +261,7 @@ namespace Extractor
             {
                 errorMessage =
                     $"The first and Last Station should be Manholes, but the first Station is {firstStationId} and the last is {lastStationId}";
-                
+
                 errors.Add(errorMessage);
             }
 
@@ -276,7 +276,7 @@ namespace Extractor
             var manholesCount = stationData.Count(data => Regexes.Manhole.IsMatch(data[0]));
 
             var sectionDataErros = ValidateSectionData(sectionData, manholesCount);
-            
+
             var totalErrors = stationDataErrors.Count + sectionDataErros.Count;
 
             if (totalErrors > 0)
@@ -306,11 +306,11 @@ namespace Extractor
         {
             var groupedStationData = new List<List<string[]>>(sectionData.Length);
             var currentGroup = new List<string[]>();
-            
+
             foreach (var station in stationData)
             {
                 currentGroup.Add(station);
-                
+
                 if (Regexes.Manhole.IsMatch(station[0]) && currentGroup.Count > 1)
                 {
                     groupedStationData.Add(new List<string[]>(currentGroup));
@@ -325,7 +325,7 @@ namespace Extractor
                 throw new InvalidOperationException(message);
             }
 
-            return groupedStationData.Zip(sectionData, (station, section) =>  (station, section)).ToList();
+            return groupedStationData.Zip(sectionData, (station, section) => (station, section)).ToList();
         }
 
         private T ToStation<T>(string[] station, Func<string, decimal, decimal, decimal, T> factory) where T : Station
@@ -333,7 +333,7 @@ namespace Extractor
             TryConvertToDecimal(station[1], out var terrain);
             TryConvertToDecimal(station[2], out var invert);
             TryConvertToDecimal(station[3], out var depth);
-            
+
             return factory(station[0], terrain, invert, depth);
         }
 
@@ -344,12 +344,12 @@ namespace Extractor
 
             var groups = Regexes.CompDiam.Match(segment[1]).Groups;
             var (length, diameter) = (groups[1].Value, groups[2].Value);
-            
+
             var pipe = new Pipe(segment[5], int.Parse(length), ushort.Parse(diameter));
 
             return new Segment(segment[0], incrementalLength, slope, pipe);
         }
-        
+
         private Manhole ToManhole(string[] station) => ToStation(station, (id, terrain, invert, depth) => new Manhole(id, terrain, invert, depth));
         private Intermediate ToIntermediate(string[] station) => ToStation(station, (id, terrain, invert, depth) => new Intermediate(id, terrain, invert, depth));
 
@@ -362,10 +362,10 @@ namespace Extractor
                 var curSegment = stationSegment.Item1;
                 var startStation = curSegment.First();
                 var endStation = curSegment.Last();
-                
-                var start = ToManhole(startStation); 
+
+                var start = ToManhole(startStation);
                 var end = ToManhole(endStation);
-                
+
                 var intermediates = curSegment
                     .Skip(1)
                     .Take(curSegment.Count - 1)
@@ -390,7 +390,7 @@ namespace Extractor
                     else
                     {
                         TryConvertToDecimal(stepDrop[2], out var invert);
-                        
+
                         var downstreamConnection = new DownstreamConnection(end, new StepDrop(invert), intermediates, segment);
                         start.DownstreamConnection = downstreamConnection;
                     }
@@ -398,32 +398,32 @@ namespace Extractor
                 else
                 {
                     TryConvertToDecimal(dropPipe[2], out var invert);
-                    
+
                     var downstreamConnection = new DownstreamConnection(end, new DropPipe(invert), intermediates, segment);
                     start.DownstreamConnection = downstreamConnection;
                 }
-                
+
                 end.UpstreamManholes.Add(start);
 
                 root ??= start;
             }
 
             if (root is null) throw new InvalidOperationException("This shouldn't happen");
-            
+
             return root;
         }
-        
+
         public Manhole Entry(TextEntity[] textEntity)
         {
             var (stationData, sectionData) = GetSectionStationData(textEntity);
-            
+
             string? errorMessage = CheckForErrors(stationData, sectionData);
 
             if (errorMessage != null)
             {
                 throw new InvalidOperationException(errorMessage);
             }
-            
+
             var data = JoinStationSection(stationData, sectionData);
             return ToManhole(data);
         }
@@ -482,18 +482,18 @@ namespace Extractor
                     message = $"{flowRate} is not a valid flow rate.";
                     errors.Add(message);
                 }
-                
+
                 // There's no check for material, we'll accept anything even if it's not a real material for now.
             });
 
             var expectedSectionLength = numberOfManholes - 1;
-            
+
             if (sectionData.Length != expectedSectionLength)
             {
                 message = $"It was detected only {sectionData.Length} segments. The number of manholes is {numberOfManholes}, so we should have {expectedSectionLength} segments.";
-                errors.Add(message); 
-            } 
-            
+                errors.Add(message);
+            }
+
             return errors;
         }
 
