@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 		..\..\Documents\Obsidian Vault\SewerSystem\README.md = ..\..\Documents\Obsidian Vault\SewerSystem\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sewarage", "Sewarage\Sewarage.csproj", "{AECD97E7-720F-491E-9672-E29EB93C0C11}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +42,6 @@ Global
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AECD97E7-720F-491E-9672-E29EB93C0C11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,7 +51,6 @@ Global
 		{F84AC13C-EAE5-4034-93C6-C8C09FC0E44D} = {A19BF140-064D-4868-AA89-DC3C81D50468}
 		{72A85CCA-196E-483C-B93A-E020F04D1080} = {A19BF140-064D-4868-AA89-DC3C81D50468}
 		{C8D1A923-5C46-4183-8A9B-53023DD5B277} = {2B233CF7-DD36-466F-99E5-36EFF2FF4536}
-		{AECD97E7-720F-491E-9672-E29EB93C0C11} = {2B233CF7-DD36-466F-99E5-36EFF2FF4536}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A8FC91D-A123-4A72-8F24-CE4DEAA2B4D0}

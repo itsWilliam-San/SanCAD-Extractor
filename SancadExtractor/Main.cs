@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using MoreLinq.Extensions;
 using SewerSystem.Contracts;
@@ -30,8 +29,7 @@ namespace Extractor
         #endregion
     }
 
-    [PluginInfo("Unofficial SANCAD extractor", "Use this extractor if you have a table generated from SANCAD software", "0.1.0", "William S. Santos")]
-    public class Main : IExtractor
+    public class SancadExtractor
     {
         private enum Headers
         {

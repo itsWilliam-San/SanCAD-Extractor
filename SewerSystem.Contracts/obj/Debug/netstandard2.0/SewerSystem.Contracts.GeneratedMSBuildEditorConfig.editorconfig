@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = SewerSystem.Contracts
-build_property.ProjectDir = C:\Users\William\RiderProjects\SewerSystem\SewerSystem.Contracts\
+build_property.ProjectDir = C:\Users\Testing\Desktop\Sewerage-System\SewerSystem.Contracts\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

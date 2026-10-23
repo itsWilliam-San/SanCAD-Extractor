@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -13,55 +14,95 @@ using ZwSoft.ZwCAD.Runtime;
 
 namespace SewerSystem
 {
+    private class class PluginTcpClient : IDisposable
+    {
+        const string IP = "127.0.0.1";
+        const string PORT = "8080";
+
+        private TcpClient client;
+        private NetworkStream stream;
+        private StreamReader reader;
+        private StreamWriter writer
+        private bool _disposed = false;
+
+        public static void Start(PluginManifest manifest)
+        {
+            Connect(IP, PORT);
+
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = false
+            };
+
+            var manifestJson = JsonSerializer.Serialize(manifest, options);
+
+            writer.WriteLine(manifest);
+            writer.Flush();
+
+            // Let anyone read this, then we start reading and waiting for messages
+
+            var newThread = new Thread(new ThreadStart(() =>
+            {
+                while (true)
+                {
+                    var message = reader.ReadLine();
+
+                    // Read JSON-RPC from Client
+                }
+            }));
+        }
+
+        private void Connect(string ip, int port)
+        {
+            client = new TcpClient(ip, port);
+            stream = _client.GetStream();
+
+            reader = new StreamReader(stream, new UTF8Encoding(false));
+        }
+
+        public void Dispose()
+        {
+            _stream?.Dispose();
+            _client?.Close();
+            GC.SuppressFinalize(this);
+        }
+    }
 
     public class SewerSystemApp : IExtensionApplication
     {
-        private bool _running = true;
+        public class PluginMessagebUS
 
-        private void OpenSocket()
+        PluginTcpClient _client;
+        readonly string ManifestPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "manifest.json");
+
+        private static PluginManifest LoadManifest()
         {
-            Task.Run(async () =>
+            if (File.Exists(ManifestPath))
             {
-                while (_running)
-                {
-                    try
-                    {
-                        using var client = new NamedPipeClientStream(".", "ipcChannel", PipeDirection.InOUt);
-                        await client.ConnectAsync();
+                var jsonString = File.ReadAllText(ManifestPath)
+                var manifest = JsonSerializer.Deserialize<PluginManifest>(jsonString) ?? throw new InvalidOperationException("The manifest is invalid");
 
-                        using var reader = new StreamReader(client);
-                        using var writer = new StreamWriter(client) { AutoFlush = true };
-
-                        while (client.IsConnected && _running)
-                        {
-                            string mensage = await reader.ReadLineAsync();
-
-                            // Do Something
-
-                            await writer.WriteLineAsync("OK");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Try again later
-                        await Task.Delay(2000);
-                    }
-                }
-            });
+                return manifest;
+            } else
+            {
+                throw new Exception("Couldn't find Manifest file");
+            }
         }
 
-        private void CloseSocket()
-        {
-            _running = false;
-        }
 
         public void Initialize()
         {
-            OpenSocket();
+            // Essa channel é para a Thread do Socket envie para a thread do ZwCAD
+            Channel.CreateUnbounded<RpcCommandRequest>();
+
+
+            _client = new();
+            _client.Connect(IP, PORT);
+
         }
         public void Terminate()
         {
-            CloseSocket();
+            _client.Dispose();
         }
     }
 
@@ -106,19 +147,11 @@ namespace SewerSystem
                 return;
             }
 
-            // var texts = GetTextEntities(db, objectResult.Value);
+            var texts = GetTextEntities(db, objectResult.Value);
 
-            var plugins = ExtractorLoader.LoadPlugins(PluginsPath);
+            var extractor = SancadExtractor.new();
 
-            var uiManager = new UiManager();
-        }
-
-        // This is used for testing later
-        private void SerializeData<T>(T data)
-        {
-            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
-
-            File.WriteAllText("data.json", jsonString);
+            extractor.Entry();
         }
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "Excel Exporter",
+  "description": "SANCAD to Excel. XLSV Support",
+  "version": "1.0.0",
+  "author": "William",
+  "id": "com.william.sancad-xlsv",
+  "exports": [
+    {
+      "id": "extract_data",
+      "label": "Peguar valores no ZwCAD",
+      "description": "Iniciar extração no ZWCad dos dados do SanCADA",
+      "entrypoint": "SancadExtractor::Main.cs:main"
+    }
+  ]
+}
