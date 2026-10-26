@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SewerSystem.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30b454656a2a9b4bf457aad7adc2de999fe9fb92")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e21e6ce78fbba7c34959fe0179b308b750154fea")]
 [assembly: System.Reflection.AssemblyProductAttribute("SewerSystem.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SewerSystem.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

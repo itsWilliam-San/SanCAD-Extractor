@@ -16,6 +16,7 @@ namespace SewerSystem
 {
     private class class PluginTcpClient : IDisposable
     {
+        BridgeService _bridgeInstance;
         const string IP = "127.0.0.1";
         const string PORT = "8080";
 
@@ -25,10 +26,13 @@ namespace SewerSystem
         private StreamWriter writer
         private bool _disposed = false;
 
-        public static void Start(PluginManifest manifest)
+        public PluginTcpClient()
         {
-            Connect(IP, PORT);
+            _bridgeInstance = BridgeService.Instace;
+        }
 
+        private async void SendHanshake(PluginManifest manifest)
+        {
             var options = new JsonSerializerOptions
             {
                 WriteIndented = false
@@ -36,20 +40,23 @@ namespace SewerSystem
 
             var manifestJson = JsonSerializer.Serialize(manifest, options);
 
-            writer.WriteLine(manifest);
-            writer.Flush();
+            await writer.WriteAsync(manifest);
+        }
 
-            // Let anyone read this, then we start reading and waiting for messages
+        public void Start(PluginManifest manifest)
+        {
+            Connect(IP, PORT);
 
-            var newThread = new Thread(new ThreadStart(() =>
+            Task.Run(async () =>
             {
+                await SendHanshake(manifest);
                 while (true)
                 {
-                    var message = reader.ReadLine();
+                    var message = await reader.ReadLineAsync();
 
-                    // Read JSON-RPC from Client
+                    await _bridgeInstance.SocketToCad.Writer.WriteAsync(message);
                 }
-            }));
+            })
         }
 
         private void Connect(string ip, int port)
@@ -62,17 +69,16 @@ namespace SewerSystem
 
         public void Dispose()
         {
-            _stream?.Dispose();
-            _client?.Close();
+            stream?.Dispose();
+            client?.Close();
             GC.SuppressFinalize(this);
         }
     }
 
     public class SewerSystemApp : IExtensionApplication
     {
-        public class PluginMessagebUS
+        PluginTcpClient _tcpInstance;
 
-        PluginTcpClient _client;
         readonly string ManifestPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "manifest.json");
 
         private static PluginManifest LoadManifest()
@@ -89,20 +95,75 @@ namespace SewerSystem
             }
         }
 
+        public SewerSystemApp()
+        {
+            _tcpInstance = PluginTcpClient.new();
+        }
 
         public void Initialize()
         {
-            // Essa channel é para a Thread do Socket envie para a thread do ZwCAD
-            Channel.CreateUnbounded<RpcCommandRequest>();
-
-
-            _client = new();
-            _client.Connect(IP, PORT);
-
+            _tcpInstance.Start(LoadManifest());
         }
         public void Terminate()
         {
             _client.Dispose();
+        }
+    }
+    
+    public class BridgeService
+    {
+        private static BridgeService _instance;
+        private static readonly object _lock = new object();
+
+        public Channel<RpcCommandRequest> SocketToCad { get; }
+        public Channel<RpcCommandRequest> CadToSocket { get; }
+
+        private BridgeService()
+        {
+            SocketToCad = Channel.CreateUnbounded<RpcCommandRequest>();
+            CadToSocket = Channel.CreateUnbounded<RpcCommandRequest>();
+        }
+
+        public void Start()
+        {
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var SocketToCadTask = SocketToCad.Reader.WaitToReadAsync().AsTask();
+                    var CadToSocketTask = CadToSocket.Reader.WaitToReadAsync().AsTask();
+
+                    var taskFinished = await Task.WhenAny(SocketToCadTask, CadToSocketTask);
+
+                    if (taskFinished == SocketToCadReader && await SocketToCadTask)
+                    {
+                        while (SocketToCad.Reader.TryRead(out var msg)) {
+                            // 
+                        }
+                    } else if (taskFinished == CadToSocketTask && await CadToSocketTask)
+                    {
+                        while (CadToSocket.Reader.TryRead(out var msg))
+                        {
+                            //
+                        }
+                    }
+                }
+            });
+        }
+
+        public static BridgeService Instace
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new BridgeService();
+                    }
+                    return _instance;
+                }
+            }
         }
     }
 
@@ -133,8 +194,8 @@ namespace SewerSystem
             }
         }
 
-        [CommandMethod("SewerSystem")]
-        public void SewerSystem()
+        [CommandMethod("ExtractData")]
+        public void ExtractData()
         {
             var acDoc = Application.DocumentManager.MdiActiveDocument;
             var db = acDoc.Database;
@@ -151,7 +212,9 @@ namespace SewerSystem
 
             var extractor = SancadExtractor.new();
 
-            extractor.Entry();
+            var result = extractor.Entry();
+
+            BridgeService.Instace.CadToSocket.Writer.Write(result);
         }
     }
 }
