@@ -1,15 +1,15 @@
 {
-  "name": "Excel Exporter",
-  "description": "SANCAD to Excel. XLSV Support",
+  "name": "SanCAD Exporter",
+  "description": "Extação de dados da tabela SanCAD e outros dados da Topografia",
   "version": "1.0.0",
   "author": "William",
-  "id": "com.william.sancad-xlsv",
+  "id": "com.william.sancad-extractor",
   "exports": [
     {
       "id": "extract_data",
-      "label": "Peguar valores no ZwCAD",
-      "description": "Iniciar extração no ZWCad dos dados do SanCADA",
-      "entrypoint": "SancadExtractor::Main.cs:main"
+      "label": "Começar Extração",
+      "description": "Iniciar extração da tabela e topografia",
+      "entrypoint": "SancadExtractor:Main.cs:main"
     }
   ]
 }
