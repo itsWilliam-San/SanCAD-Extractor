@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Testing\\Desktop\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj": {}
+    "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Testing\\Desktop\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj": {
+    "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj",
         "projectName": "Extractor.Tests",
-        "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj",
-        "packagesPath": "C:\\Users\\Testing\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\Extractor.Tests\\obj\\",
+        "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\Extractor.Tests\\Extractor.Tests.csproj",
+        "packagesPath": "C:\\Users\\Will\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\Extractor.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Testing\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Will\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,11 +29,11 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj": {
-                "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj"
+              "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj": {
+                "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj"
               },
-              "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
-                "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj"
+              "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
+                "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj"
               }
             }
           }
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -366,17 +366,17 @@
         }
       }
     },
-    "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj": {
+    "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj",
+        "projectUniqueName": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj",
         "projectName": "SancadExtractor",
-        "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj",
-        "packagesPath": "C:\\Users\\Testing\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SancadExtractor\\obj\\",
+        "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SancadExtractor\\SancadExtractor.csproj",
+        "packagesPath": "C:\\Users\\Will\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SancadExtractor\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Testing\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Will\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -391,8 +391,8 @@
             "framework": "netstandard2.0",
             "targetAlias": "netstandard2.0",
             "projectReferences": {
-              "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
-                "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj"
+              "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
+                "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj"
               }
             }
           }
@@ -443,21 +443,21 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
+    "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
         "projectName": "SewerSystem.Contracts",
-        "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
-        "packagesPath": "C:\\Users\\Testing\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\obj\\",
+        "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
+        "packagesPath": "C:\\Users\\Will\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Testing\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Will\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -519,7 +519,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

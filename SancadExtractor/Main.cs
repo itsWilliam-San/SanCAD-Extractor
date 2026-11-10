@@ -13,7 +13,7 @@ namespace Extractor
 {
     internal static class Regexes
     {
-        internal static readonly Regex Basin = new Regex(@"^BÁCIA: .*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        internal static readonly Regex Basin = new Regex(@"^B[ÁA]CIA: .*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static readonly Regex Collection = new Regex(@"^COLETOR: \d+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         #region StationNames
@@ -93,7 +93,7 @@ namespace Extractor
 
                 if (shouldCapture)
                 {
-                    if (item.Content.Equals(SegmentHeaders[Headers.Intermediates], StringComparison.InvariantCultureIgnoreCase))
+                    if (item.Content.Equals(MixHeaders[Headers.Intermediates], StringComparison.InvariantCultureIgnoreCase))
                     {
                         shouldCapture = false;
                         stationData.Add(item);
@@ -128,7 +128,7 @@ namespace Extractor
                 .OrderByDescending(x => x.Coordinates.Y)
                 .ThenBy(x => x.Coordinates.X)
                 .SkipWhile(text =>
-                    text.Content.Equals(StationHeaders[Headers.Manhole], StringComparison.InvariantCultureIgnoreCase))
+                    !text.Content.Equals(StationHeaders[Headers.Manhole], StringComparison.InvariantCultureIgnoreCase))
                 .TakeWhile(text => !Regexes.Basin.IsMatch(text.Content))
                 .Where(text => !Ignore.Contains(text.Content))
                 .ToArray();
@@ -252,7 +252,7 @@ namespace Extractor
                 }
             });
 
-            var firstStationId = stationData[1][0];
+            var firstStationId = stationData[0][0];
             var lastStationId = stationData[^1][0];
 
             if (!(Regexes.Manhole.IsMatch(firstStationId) && Regexes.Manhole.IsMatch(stationData[^1][0])))
@@ -291,8 +291,8 @@ namespace Extractor
                     message += $"\nA total of {sectionDataErros.Count} Section Data errors have been found";
                 }
 
-                message += $"Station Data errors:" + stationDataErrors;
-                message += $"Segment Data errors:" + sectionDataErros;
+                message += "\nStation Data errors:\n" + string.Join("\n", stationDataErrors);
+                message += "\nSegment Data errors:\n" + string.Join("\n", sectionDataErros);
 
                 message += $"Please fix them first, and try again.";
             }
@@ -326,92 +326,133 @@ namespace Extractor
             return groupedStationData.Zip(sectionData, (station, section) => (station, section)).ToList();
         }
 
-        private T ToStation<T>(string[] station, Func<string, decimal, decimal, decimal, T> factory) where T : Station
+        private SewerSystemDTO ToSewerSystemDTO(List<(List<string[]>, string[])> data)
         {
-            TryConvertToDecimal(station[1], out var terrain);
-            TryConvertToDecimal(station[2], out var invert);
-            TryConvertToDecimal(station[3], out var depth);
-
-            return factory(station[0], terrain, invert, depth);
-        }
-
-        private Segment ToSegment(string[] segment)
-        {
-            TryConvertToDecimal(segment[3], out var incrementalLength);
-            TryConvertToDecimal(segment[2], out var slope);
-
-            var groups = Regexes.CompDiam.Match(segment[1]).Groups;
-            var (length, diameter) = (groups[1].Value, groups[2].Value);
-
-            var pipe = new Pipe(segment[5], int.Parse(length), ushort.Parse(diameter));
-
-            return new Segment(segment[0], incrementalLength, slope, pipe);
-        }
-
-        private Manhole ToManhole(string[] station) => ToStation(station, (id, terrain, invert, depth) => new Manhole(id, terrain, invert, depth));
-        private Intermediate ToIntermediate(string[] station) => ToStation(station, (id, terrain, invert, depth) => new Intermediate(id, terrain, invert, depth));
-
-        private Manhole ToManhole(List<(List<string[]>, string[])> data)
-        {
-            Manhole? root = null;
+            var intermediates = new List<IntermediateDTO>();
+            var segments = new List<SegmentDTO>();
+            var primaryMap = new Dictionary<string, StationDTO>();
 
             foreach (var stationSegment in data)
             {
                 var curSegment = stationSegment.Item1;
+                var sectionRow = stationSegment.Item2;
+
                 var startStation = curSegment.First();
                 var endStation = curSegment.Last();
 
-                var start = ToManhole(startStation);
-                var end = ToManhole(endStation);
+                var startId = startStation[0];
+                var endId = endStation[0];
 
-                var intermediates = curSegment
-                    .Skip(1)
-                    .Take(curSegment.Count - 1)
-                    .Where(x => !(Regexes.DropPipe.IsMatch(x[0]) || Regexes.StepDrop.IsMatch(x[0])))
-                    .Select(ToIntermediate)
-                    .ToList();
-
-                var segment = ToSegment(stationSegment.Item2);
-
-                var dropPipe = curSegment.Find(x => Regexes.DropPipe.IsMatch(x[0]));
-
-                if (dropPipe is null)
+                if (!primaryMap.TryGetValue(startId, out var startStationDTO))
                 {
-                    var stepDrop = curSegment.Find(x => Regexes.StepDrop.IsMatch(x[0]));
+                    TryConvertToDecimal(startStation[1], out var stTerrain);
+                    TryConvertToDecimal(startStation[2], out var stInvert);
+                    TryConvertToDecimal(startStation[3], out var stDepth);
 
-                    if (stepDrop is null)
+                    startStationDTO = new StationDTO
                     {
-                        var downstreamConnection = new DownstreamConnection(end, null, intermediates, segment);
-                        start.DownstreamConnection = downstreamConnection;
-                        end.UpstreamManholes.Add(start);
+                        ID = startId,
+                        TerrainLevel = stTerrain,
+                        InvertLevel = stInvert,
+                        Depth = stDepth,
+                        UpstreamManholes = new List<string>()
+                    };
+                    primaryMap[startId] = startStationDTO;
+                }
+
+                if (!primaryMap.TryGetValue(endId, out var endStationDTO))
+                {
+                    TryConvertToDecimal(endStation[1], out var endTerrain);
+                    TryConvertToDecimal(endStation[2], out var endInvert);
+                    TryConvertToDecimal(endStation[3], out var endDepth);
+
+                    endStationDTO = new StationDTO
+                    {
+                        ID = endId,
+                        TerrainLevel = endTerrain,
+                        InvertLevel = endInvert,
+                        Depth = endDepth,
+                        UpstreamManholes = new List<string>()
+                    };
+                    primaryMap[endId] = endStationDTO;
+                }
+
+                ConnectionDTO? connection = null;
+                var segmentIntermediateIds = new List<string>();
+
+                for (int i = 1; i < curSegment.Count - 1; i++)
+                {
+                    var st = curSegment[i];
+                    if (Regexes.DropPipe.IsMatch(st[0]))
+                    {
+                        TryConvertToDecimal(st[2], out var invert);
+                        connection = new ConnectionDTO { kind = "DropPipe", InvertLevel = invert };
+                    }
+                    else if (Regexes.StepDrop.IsMatch(st[0]))
+                    {
+                        TryConvertToDecimal(st[2], out var invert);
+                        connection = new ConnectionDTO { kind = "StepDrop", InvertLevel = invert };
                     }
                     else
                     {
-                        TryConvertToDecimal(stepDrop[2], out var invert);
+                        TryConvertToDecimal(st[1], out var terrain);
+                        TryConvertToDecimal(st[2], out var invert);
+                        TryConvertToDecimal(st[3], out var depth);
 
-                        var downstreamConnection = new DownstreamConnection(end, new StepDrop(invert), intermediates, segment);
-                        start.DownstreamConnection = downstreamConnection;
+                        var intermediate = new IntermediateDTO
+                        {
+                            ID = st[0],
+                            TerrainLevel = terrain,
+                            InvertLevel = invert,
+                            Depth = depth
+                        };
+                        intermediates.Add(intermediate);
+                        segmentIntermediateIds.Add(st[0]);
                     }
                 }
-                else
+
+                var segmentId = sectionRow[0];
+                var compDiamMatch = Regexes.CompDiam.Match(sectionRow[1]).Groups;
+                TryConvertToDecimal(compDiamMatch[1].Value, out var length);
+                TryConvertToDecimal(compDiamMatch[2].Value, out var rawDiameter);
+                TryConvertToDecimal(sectionRow[2], out var slope);
+
+                decimal diameter = rawDiameter >= 1 ? rawDiameter / 1000m : rawDiameter;
+
+                var pipe = new PipeDTO
                 {
-                    TryConvertToDecimal(dropPipe[2], out var invert);
+                    Material = sectionRow[5],
+                    Length = length,
+                    Slope = slope,
+                    Diameter = diameter
+                };
 
-                    var downstreamConnection = new DownstreamConnection(end, new DropPipe(invert), intermediates, segment);
-                    start.DownstreamConnection = downstreamConnection;
+                var segment = new SegmentDTO
+                {
+                    ID = segmentId,
+                    Connection = connection,
+                    Pipe = pipe,
+                    Intermediates = segmentIntermediateIds,
+                    IntermediateDistance = 20.0
+                };
+                segments.Add(segment);
+
+                startStationDTO.DownstreamConnection = (endId, segmentId);
+                if (!endStationDTO.UpstreamManholes.Contains(startId))
+                {
+                    endStationDTO.UpstreamManholes.Add(startId);
                 }
-
-                end.UpstreamManholes.Add(start);
-
-                root ??= start;
             }
 
-            if (root is null) throw new InvalidOperationException("This shouldn't happen");
-
-            return root;
+            return new SewerSystemDTO
+            {
+                Intermediates = intermediates,
+                Segments = segments,
+                Primary = primaryMap.Values.ToList()
+            };
         }
 
-        public Manhole Entry(TextEntity[] textEntity)
+        public SewerSystemDTO Entry(TextEntity[] textEntity)
         {
             var (stationData, sectionData) = GetSectionStationData(textEntity);
 
@@ -423,7 +464,7 @@ namespace Extractor
             }
 
             var data = JoinStationSection(stationData, sectionData);
-            return ToManhole(data);
+            return ToSewerSystemDTO(data);
         }
 
         private List<string> ValidateSectionData(string[][] sectionData, int numberOfManholes)

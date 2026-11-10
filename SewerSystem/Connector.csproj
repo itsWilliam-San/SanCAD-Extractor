@@ -1,105 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.props" Condition="Exists('..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{15102FEC-3338-49BD-99C7-816F2BFCCD10}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net481</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
     <RootNamespace>SewerSystem</RootNamespace>
     <AssemblyName>SewerSystem</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <FileAlignment>512</FileAlignment>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <!-- Pacotes NuGet geridos pelo PackageReference -->
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="StreamJsonRpc">
-      <Version>2.26.150</Version>
-    </PackageReference>
-    <PackageReference Include="ZWCAD.NetApi">
-      <Version>20.26.0</Version>
-    </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="10.0.13" />
+    <PackageReference Include="System.Threading.Channels" Version="9.0.2" />
   </ItemGroup>
+
   <ItemGroup>
-    <!-- Referências Nativas do .NET Framework -->
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.ValueTuple" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <Reference Include="ZwDatabaseMgd">
+      <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwDatabaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ZwManaged">
+      <HintPath>..\packages\ZWCAD.NetApi.20.26.0\lib\net47\ZwManaged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Main.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <ProjectReference Include="..\SancadExtractor\SancadExtractor.csproj" />
+    <ProjectReference Include="..\SewerSystem.Contracts\SewerSystem.Contracts.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\SancadExtractor\SancadExtractor.csproj">
-      <Project>{f84ac13c-eae5-4034-93c6-c8c09fc0e44d}</Project>
-      <Name>SancadExtractor</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\SewerSystem.Contracts\SewerSystem.Contracts.csproj">
-      <Project>{c8d1a923-5c46-4183-8a9b-53023dd5b277}</Project>
-      <Name>SewerSystem.Contracts</Name>
-    </ProjectReference>
+    <None Update="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="manifest.json" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    -->
-  <!--
-    <Target Name="BeforeBuild">
-    </Target>
-    -->
-  <Target Name="AfterBuild">
+
+  <Target Name="AfterBuildCopy" AfterTargets="Build">
     <ItemGroup>
-      <Extractor Include="$(SolutionDir)SancadExtractor\bin\$(Configuration)\**\*.*" />
-      <Exporter Include="$(SolutionDir)Exporter\bin\$(Configuration)\**\*.*" />
+      <ExtractorFiles Include="$(SolutionDir)SancadExtractor\bin\$(Configuration)\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(Extraction)" DestinationFolder="$(TargetDir)\plugins\extraction\SancadExtractor\%(RecursiveDir)" />
-    <Copy SourceFiles="@(Exporter)" DestinationFolder="$(TargetDir)\plugins\exporter\OficialExporter\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ExtractorFiles)" DestinationFolder="$(TargetDir)\plugins\extraction\SancadExtractor\%(RecursiveDir)" Condition="Exists('$(SolutionDir)SancadExtractor\bin\$(Configuration)\')" />
   </Target>
-  <Import Project="..\packages\System.Runtime.WindowsRuntime.4.6.0\build\net461\System.Runtime.WindowsRuntime.targets" Condition="Exists('..\packages\System.Runtime.WindowsRuntime.4.6.0\build\net461\System.Runtime.WindowsRuntime.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Runtime.WindowsRuntime.4.6.0\build\net461\System.Runtime.WindowsRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Runtime.WindowsRuntime.4.6.0\build\net461\System.Runtime.WindowsRuntime.targets'))" />
-    <Error Condition="!Exists('..\packages\System.Runtime.WindowsRuntime.UI.Xaml.4.6.0\build\net461\System.Runtime.WindowsRuntime.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Runtime.WindowsRuntime.UI.Xaml.4.6.0\build\net461\System.Runtime.WindowsRuntime.UI.Xaml.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.targets'))" />
-    <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets'))" />
-  </Target>
-  <Import Project="..\packages\System.Runtime.WindowsRuntime.UI.Xaml.4.6.0\build\net461\System.Runtime.WindowsRuntime.UI.Xaml.targets" Condition="Exists('..\packages\System.Runtime.WindowsRuntime.UI.Xaml.4.6.0\build\net461\System.Runtime.WindowsRuntime.UI.Xaml.targets')" />
-  <Import Project="..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.targets" Condition="Exists('..\packages\Microsoft.Windows.SDK.Contracts.10.0.28000.2526\build\Microsoft.Windows.SDK.Contracts.targets')" />
-  <Import Project="..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" />
+
 </Project>

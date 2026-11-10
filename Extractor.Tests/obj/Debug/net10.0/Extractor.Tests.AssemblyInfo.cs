@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Extractor.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60032531bb0ffbb0428b22d31b96b90335b38f59")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6363b839b30150a86fbf90c9f9c6a741db41c3b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Extractor.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Extractor.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -623,19 +623,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Testing\\.nuget\\packages\\": {}
+    "C:\\Users\\Will\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
+      "projectUniqueName": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
       "projectName": "SewerSystem.Contracts",
-      "projectPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
-      "packagesPath": "C:\\Users\\Testing\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Testing\\Desktop\\Sewerage-System\\SewerSystem.Contracts\\obj\\",
+      "projectPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\SewerSystem.Contracts.csproj",
+      "packagesPath": "C:\\Users\\Will\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Will\\source\\repos\\itsWilliam-San\\Sewerage-System\\SewerSystem.Contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Testing\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Will\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -697,7 +697,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

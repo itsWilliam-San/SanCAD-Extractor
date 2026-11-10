@@ -15,11 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2B233CF7-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SewerSystem.Contracts", "SewerSystem.Contracts\SewerSystem.Contracts.csproj", "{C8D1A923-5C46-4183-8A9B-53023DD5B277}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{1D003272-CF57-4DBA-85DB-C4CD602798F7}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Documents\Obsidian Vault\SewerSystem\README.md = ..\..\Documents\Obsidian Vault\SewerSystem\README.md
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
